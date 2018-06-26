@@ -1,5 +1,6 @@
 package turmina.nazareh.spring5recipeapp.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import turmina.nazareh.spring5recipeapp.repositories.UnitOfMeasureRepository;
 
 import java.util.Optional;
 
+@Slf4j
 @Controller
 public class IndexController {
 
@@ -24,7 +26,7 @@ public class IndexController {
 
     @RequestMapping({"/","", "index"} )
     public String getIndexPage(){
-
+        log.debug("Getting index page.");
         Optional<Category> category = categoryRepository.findByDescription("American");
         Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByDescription("Pinch");
 

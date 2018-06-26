@@ -1,9 +1,11 @@
 package turmina.nazareh.spring5recipeapp.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import turmina.nazareh.spring5recipeapp.domain.*;
 import turmina.nazareh.spring5recipeapp.repositories.CategoryRepository;
 import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
@@ -13,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -40,7 +42,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.debug("Loading bootstrap data.");
         initData();
     }
 
@@ -157,22 +161,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     }
 
-    /*
-    private Byte[] getResourceImage (String imagePath) {
-        Byte[] image;
-        try {
-            File file = new File(imagePath);
-            image =  ArrayUtils.toObject(Files.readAllBytes(file.toPath()));
-         //   ArrayUtils. toObject(bytes);
-        }
-        catch (IOException e){
-            System.out.println("WARNING: unable to read image :"+ imagePath);
-            image = null;
-        }
-        return image;
-    }*/
-
-    //todo
     private Recipe getPerfectGuacamoleRecipe (){
         Recipe recipe = new Recipe();
         recipe.setDescription("Perfect Guacamole");
@@ -206,7 +194,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     private void setPerfectGuacamoleIngredients(Recipe recipe) {
-
         recipe.addIngredient(new Ingredient("Ripe avocados",new BigDecimal(2),unitUom));
         recipe.addIngredient(new Ingredient("Kosher Salt",new BigDecimal(1/2),teaspoonUom));
         recipe.addIngredient(new Ingredient("Fresh lime juice or lemon juice",new BigDecimal(1),tablespoonUom));
@@ -234,5 +221,4 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 .orElseThrow(() -> new RuntimeException("Category not found!")));
         return categories;
     }
-
 }

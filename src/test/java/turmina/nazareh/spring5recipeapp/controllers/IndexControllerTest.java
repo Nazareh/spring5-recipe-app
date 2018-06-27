@@ -2,16 +2,24 @@ package turmina.nazareh.spring5recipeapp.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
+import turmina.nazareh.spring5recipeapp.domain.Recipe;
 import turmina.nazareh.spring5recipeapp.services.RecipeService;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 public class IndexControllerTest {
 
@@ -24,15 +32,45 @@ public class IndexControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        indexController = new IndexController(recipeService);
+            MockitoAnnotations.initMocks(this);
+            indexController = new IndexController(recipeService);
+    }
+
+    @Test
+    public void testMockMVC() throws Exception {
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"));
+
     }
 
     @Test
     public void getIndexPage() {
-        String expectedReturn = "index";
-        assertEquals(expectedReturn,indexController.getIndexPage(model));
+        //given
+        Set<Recipe> recipeSet = new HashSet<>();
+
+        Recipe recipeOne = new Recipe();
+        recipeOne.setId(1L);
+        Recipe recipeTwo = new Recipe();
+        recipeTwo.setId(2L);
+
+        recipeSet.add(recipeOne);
+        recipeSet.add(recipeTwo);
+
+        when(recipeService.getRecipes()).thenReturn(recipeSet);
+
+        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+
+        //when
+        String viewName =indexController.getIndexPage(model);
+
+        //then
+        assertEquals("index", viewName);
         verify(recipeService,times(1)).getRecipes();
-        verify(model,times(1)).addAttribute(eq("recipes"),anySet());
+        verify(model,times(1)).addAttribute(eq("recipes"),argumentCaptor.capture());
+        assertEquals(2,argumentCaptor.getValue().size());
     }
 }

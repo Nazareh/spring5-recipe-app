@@ -134,6 +134,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         categories.add(categoryRepository
                 .findByDescription("Mexican")
                 .orElseThrow(() -> new RuntimeException("Category not found!")));
+        categories.add(categoryRepository
+                .findByDescription("American")
+                .orElseThrow(() -> new RuntimeException("Category not found!")));
         return categories;
     }
 
@@ -142,21 +145,21 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         recipe.addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1) , teaspoonUom));
         recipe.addIngredient(new Ingredient("Dried cumin",  new BigDecimal(1) , teaspoonUom));
         recipe.addIngredient(new Ingredient("Sugar", new BigDecimal(1) , teaspoonUom));
-        recipe.addIngredient(new Ingredient("Salt", new BigDecimal(1/2) , teaspoonUom));
+        recipe.addIngredient(new Ingredient("Salt", new BigDecimal(0.5) , teaspoonUom));
         recipe.addIngredient(new Ingredient("Garlic clove finely chopped", new BigDecimal(2) , unitUom));
         recipe.addIngredient(new Ingredient("Grated Orange Zest",  new BigDecimal(1) ,tablespoonUom));
         recipe.addIngredient(new Ingredient("Fresh Orange Juice",  new BigDecimal(3) ,tablespoonUom));
         recipe.addIngredient(new Ingredient("Olive Oil",  new BigDecimal(2) ,tablespoonUom));
-        recipe.addIngredient(new Ingredient("Skinless, boneless chicken thighs",  new BigDecimal(1+ 1/4),poundUom));
+        recipe.addIngredient(new Ingredient("Skinless, boneless chicken thighs",  new BigDecimal(1.25),poundUom));
         recipe.addIngredient(new Ingredient("Small corn tortillas", new BigDecimal(8) , unitUom));
         recipe.addIngredient(new Ingredient("Packed baby arugula", new BigDecimal(3) ,ounceUom));
         recipe.addIngredient(new Ingredient("Sliced medium ripe avocados", new BigDecimal(2) ,unitUom));
         recipe.addIngredient(new Ingredient("Thinly sliced radishes", new BigDecimal(4) ,unitUom));
-        recipe.addIngredient(new Ingredient("Halved cherry tomatoes", new BigDecimal(1/2) ,pintUom));
-        recipe.addIngredient(new Ingredient("Thinly sliced red onion", new BigDecimal(1/4) ,pintUom));
+        recipe.addIngredient(new Ingredient("Halved cherry tomatoes", new BigDecimal(0.5) ,pintUom));
+        recipe.addIngredient(new Ingredient("Thinly sliced red onion", new BigDecimal(.25) ,pintUom));
         recipe.addIngredient(new Ingredient("Roughly chopped cilantro", new BigDecimal(1) ,unitUom));
-        recipe.addIngredient(new Ingredient("Sour cream", new BigDecimal(1/2) ,cupUom));
-        recipe.addIngredient(new Ingredient("Milk", new BigDecimal(1/4) ,cupUom));
+        recipe.addIngredient(new Ingredient("Sour cream", new BigDecimal(.5) ,cupUom));
+        recipe.addIngredient(new Ingredient("Milk", new BigDecimal(.25) ,cupUom));
         recipe.addIngredient(new Ingredient("Lime, cut into wedges", new BigDecimal(1) ,unitUom));
 
     }
@@ -195,13 +198,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     private void setPerfectGuacamoleIngredients(Recipe recipe) {
         recipe.addIngredient(new Ingredient("Ripe avocados",new BigDecimal(2),unitUom));
-        recipe.addIngredient(new Ingredient("Kosher Salt",new BigDecimal(1/2),teaspoonUom));
+        recipe.addIngredient(new Ingredient("Kosher Salt",new BigDecimal(0.5),teaspoonUom));
         recipe.addIngredient(new Ingredient("Fresh lime juice or lemon juice",new BigDecimal(1),tablespoonUom));
-        recipe.addIngredient(new Ingredient("Minced red onion or thinly sliced green onion",new BigDecimal(1/4),cupUom));
+        recipe.addIngredient(new Ingredient("Minced red onion or thinly sliced green onion",new BigDecimal(.25),cupUom));
         recipe.addIngredient(new Ingredient("Serrano chilies, stems and seeds removed, minced",new BigDecimal(2),unitUom));
         recipe.addIngredient(new Ingredient("Cilantro (leaves and tender stems), finely chopped",new BigDecimal(2),tablespoonUom));
         recipe.addIngredient(new Ingredient("Freshly grated black pepper",new BigDecimal(2),dashUom));
-        recipe.addIngredient(new Ingredient("Ripe tomato, seeds and pulp removed, chopped",new BigDecimal(1/2),unitUom));
+        recipe.addIngredient(new Ingredient("Ripe tomato, seeds and pulp removed, chopped",new BigDecimal(0.5),unitUom));
 
     }
 
@@ -218,6 +221,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         categories.add(categoryRepository
                 .findByDescription("Mexican")
+                .orElseThrow(() -> new RuntimeException("Category not found!")));
+        categories.add(categoryRepository
+                .findByDescription("Fast Food")
                 .orElseThrow(() -> new RuntimeException("Category not found!")));
         return categories;
     }

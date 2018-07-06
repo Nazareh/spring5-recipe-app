@@ -65,7 +65,7 @@ public class IndexControllerTest {
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         //when
-        String viewName =indexController.getIndexPage(model);
+        String viewName = indexController.getIndexPage(model);
 
         //then
         assertEquals("index", viewName);

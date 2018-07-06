@@ -1,6 +1,5 @@
 package turmina.nazareh.spring5recipeapp.repositories;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +17,19 @@ public class UnitOfMeasureRepositoryIT {
 
     @Autowired
     private UnitOfMeasureRepository unitOfMeasureRepository;
-
-    @Before
-    public void setUp() throws Exception {
-    }
+    private String description;
 
     @Test
     public void findByDescription() {
-
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
-
-        assertEquals("Teaspoon", uomOptional.get().getDescription());
-
+        description = "Teaspoon";
+        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription(description);
+        assertEquals(description, uomOptional.get().getDescription());
     }
+
     @Test
     public void findByDescriptionCup() {
-        String description = "Cup";
-
+        description = "Cup";
         Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription(description);
-
         assertEquals(description, uomOptional.get().getDescription());
-
     }
 }

@@ -3,6 +3,7 @@ package turmina.nazareh.spring5recipeapp.domain;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 public class CategoryTest {
@@ -24,9 +25,11 @@ public class CategoryTest {
 
     @Test
     public void getDescription() {
+        fail();
     }
 
     @Test
     public void getRecipes() {
+        fail();
     }
 }

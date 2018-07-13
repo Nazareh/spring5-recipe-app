@@ -120,7 +120,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private  Notes getChickenRecipeNotes (Recipe recipe){
         Notes notes = new Notes();
         notes.setRecipe(recipe);
-        notes.setRecipeNote(
+        notes.setRecipeNotes(
                 "Look for ancho chile powder with the Mexican ingredients at your grocery store, " +
                 "on buy it online. (If you can't find ancho chili powder, you replace the ancho chili, " +
                 "the oregano, and the cumin with 2 1/2 tablespoons regular chili powder, though the " +
@@ -210,7 +210,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     private  Notes getPerfectGuacamoleNotes (){
         Notes notes = new Notes();
-        notes.setRecipeNote(
+        notes.setRecipeNotes(
                 "Be careful handling chiles if using. Wash your hands thoroughly after handling " +
                 "and do not touch your eyes or the area near your eyes with your hands for several hours.");
         return notes;

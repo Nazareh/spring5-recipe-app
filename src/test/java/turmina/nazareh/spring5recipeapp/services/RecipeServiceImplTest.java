@@ -17,12 +17,12 @@ import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
 
-    private RecipeService recipeService;
-    private Recipe recipe;
-    private Set<Recipe> recipesSet;
+    RecipeService recipeService;
+    Recipe recipe;
+    Set<Recipe> recipesSet;
 
     @Mock
-    private RecipeRepository recipeRepository;
+    RecipeRepository recipeRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -47,7 +47,7 @@ public class RecipeServiceImplTest {
     public void getRecipesTest() {
         recipesSet.add(recipe);
 
-        when(recipeService.getRecipes()).thenReturn(recipesSet);
+        when(recipeRepository.findAll()).thenReturn(recipesSet);
 
         assertEquals(recipeService.getRecipes().size(),1);
         verify(recipeRepository,times(1)).findAll();

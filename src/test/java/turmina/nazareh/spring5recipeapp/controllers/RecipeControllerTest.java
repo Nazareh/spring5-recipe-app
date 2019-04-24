@@ -91,11 +91,11 @@ public class RecipeControllerTest {
     @Test
     //not working at the moment, but the functionality does work via browser.
     public void testDeleteAction () throws Exception {
-        mockMvc.perform(get("recipe/1/delete"))
+        mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
-        verify(recipeService,times(1)).deleteById(anyLong());
+        verify(recipeService, times(1)).deleteById(anyLong());
 
     }
 }

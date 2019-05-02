@@ -65,7 +65,7 @@ public class RecipeServiceImplTest {
     public void testDeleteById() throws Exception {
 
         //given
-        Long idToDelete = Long.valueOf(2);
+        Long idToDelete = Long.valueOf(2L);
         //when
         recipeService.deleteById(idToDelete);
         //then

@@ -89,9 +89,9 @@ public class IngredientControllerTest {
         when(unitOfMeasureService.listAllUoms()).thenReturn(new HashSet<>());
 
         //then
-        mockMvc.perform(get("/recipe/ingredient/ingredientform"))
+        mockMvc.perform(get("/recipe/1/ingredient/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/ingredient/ingredientform"))
+                .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("ingredient"))
                 .andExpect((model().attributeExists("uomList")));
 
@@ -141,7 +141,7 @@ public class IngredientControllerTest {
 
         mockMvc.perform(get("/recipe/1/ingredient/1/delete"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/1/ingredients"));
+                .andExpect(view().name("redirect:/recipe/1/ingredients"));
         verify(ingredientService, times(1)).deleteById(anyLong(),anyLong());
 
     }

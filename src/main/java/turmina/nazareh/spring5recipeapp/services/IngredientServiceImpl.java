@@ -13,6 +13,9 @@ import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 import turmina.nazareh.spring5recipeapp.repositories.UnitOfMeasureRepository;
 
 import java.util.Optional;
+import java.util.Set;
+
+import static java.rmi.server.LogStream.log;
 
 @Slf4j
 @Service
@@ -37,7 +40,7 @@ public class IngredientServiceImpl implements IngredientService{
 
         if(!recipeOptional.isPresent()){
             //todo impl error handling
-            log.error("recipe id not found, id: "+ recipeId);
+            IngredientServiceImpl.log.error("recipe id not found, id: "+ recipeId);
         }
 
         Recipe recipe = recipeOptional.get();
@@ -48,7 +51,7 @@ public class IngredientServiceImpl implements IngredientService{
 
         if (!ingredientCommandOptional.isPresent()){
             //todo impl error handling
-            log.error("ingredient id not found, id: "+ ingredientId);
+            IngredientServiceImpl.log.error("ingredient id not found, id: "+ ingredientId);
 
         }
 
@@ -62,7 +65,7 @@ public class IngredientServiceImpl implements IngredientService{
 
         if(!recipeOptional.isPresent()){
             //todo toss error if not found!
-            log.error("Recipe not found for id: "+ command.getRecipeId());
+            IngredientServiceImpl.log.error("Recipe not found for id: "+ command.getRecipeId());
             return new IngredientCommand();
         }
         else{
@@ -107,5 +110,29 @@ public class IngredientServiceImpl implements IngredientService{
             //todo check for fail
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long recipeId, Long ingredientId) {
+
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RuntimeException("RECIPE "+recipeId+"  NOT FOUND"));
+
+
+        log.debug("list initial size = " + recipe.getIngredients().size());
+        Set<Ingredient> recipeIngredients = recipe.getIngredients();
+
+        Ingredient ingredientToBeDelete = recipeIngredients
+                .stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Ingredient "+ ingredientId + "  NOT FOUND"));
+        ingredientToBeDelete.setRecipe(null);
+        recipeIngredients.removeIf( ingredient -> ingredient.getId().equals(ingredientToBeDelete.getId()));
+        recipe.setIngredients(recipeIngredients);
+        log.debug("list final size = " + recipe.getIngredients().size());
+        recipeRepository.save(recipe);
+
     }
 }

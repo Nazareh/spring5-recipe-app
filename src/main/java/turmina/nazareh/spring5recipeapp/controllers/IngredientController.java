@@ -98,7 +98,7 @@ public class IngredientController {
         log.debug("Deleting ingredient "+ ingredientId + " from recipe "+ recipeId);
 
         ingredientService.deleteById(Long.valueOf(recipeId),Long.valueOf(ingredientId)) ;
-        return "redirect:/recipe/{recipeId}/ingredients";
+        return "redirect:/recipe/"+recipeId+"/ingredients";
 
     }
 

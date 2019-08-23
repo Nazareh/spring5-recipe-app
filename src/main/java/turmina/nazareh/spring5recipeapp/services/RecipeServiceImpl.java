@@ -3,6 +3,7 @@ package turmina.nazareh.spring5recipeapp.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.converters.RecipeCommandToRecipe;
 import turmina.nazareh.spring5recipeapp.converters.RecipeToRecipeCommand;
@@ -42,10 +43,11 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long id) {
         return recipeRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Recipe not found"));
+                .orElseThrow(() -> new NotFoundException("Recipe not found. For ID value: "+ id.toString()));
     }
 
     @Override
+    @Transactional
     public RecipeCommand saveRecipeCommand (RecipeCommand recipeCommand ){
         Recipe recipe = recipeCommandToRecipe.convert(recipeCommand);
 

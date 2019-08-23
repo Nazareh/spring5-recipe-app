@@ -2,12 +2,13 @@ package turmina.nazareh.spring5recipeapp.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
-import turmina.nazareh.spring5recipeapp.domain.Recipe;
+import turmina.nazareh.spring5recipeapp.exceptions.NotFoundException;
 import turmina.nazareh.spring5recipeapp.services.RecipeService;
 
 @Slf4j
@@ -16,7 +17,6 @@ public class RecipeController {
 
     private RecipeService recipeService;
 
-    @Autowired
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
@@ -53,5 +53,18 @@ public class RecipeController {
         recipeService.deleteById(Long.valueOf(id));
 
         return "redirect:/";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(){
+
+        log.error("Handling not found exception");
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("404error");
+
+        return modelAndView;
     }
 }

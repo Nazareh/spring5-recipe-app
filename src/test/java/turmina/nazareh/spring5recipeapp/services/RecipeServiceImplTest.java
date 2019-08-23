@@ -4,9 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.converters.RecipeCommandToRecipe;
 import turmina.nazareh.spring5recipeapp.converters.RecipeToRecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
+import turmina.nazareh.spring5recipeapp.exceptions.NotFoundException;
 import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 
 import java.util.HashSet;
@@ -49,6 +51,38 @@ public class RecipeServiceImplTest {
         assertNotNull("Null recipe returned", recipeService.findById(1L));
         verify(recipeRepository,times(1)).findById(anyLong());
         verify(recipeRepository,never()).findAll();
+    }
+
+    @Test (expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception{
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned =  recipeService.findById(1L);
+
+        //should go boom
+    }
+
+
+    @Test
+    public void getRecipeCommandByIdTest() throws Exception{
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", commandById);
+        verify(recipeRepository,times(1)).findById(anyLong());
+        verify(recipeRepository,never()).findAll();
+
     }
 
     @Test

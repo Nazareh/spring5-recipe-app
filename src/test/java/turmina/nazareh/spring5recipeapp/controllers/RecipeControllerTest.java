@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
+import turmina.nazareh.spring5recipeapp.exceptions.NotFoundException;
 import turmina.nazareh.spring5recipeapp.services.RecipeService;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -48,6 +49,16 @@ public class RecipeControllerTest {
                 .andExpect(model().attributeExists("recipe"));
     }
 
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("recipe/1/show"))
+                .andExpect(status().isNotFound());
+    }
     @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand recipeCommand  = new RecipeCommand();

@@ -11,7 +11,6 @@ import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
 import turmina.nazareh.spring5recipeapp.exceptions.NotFoundException;
 import turmina.nazareh.spring5recipeapp.services.RecipeService;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -108,4 +107,12 @@ public class RecipeControllerTest {
         verify(recipeService, times(1)).deleteById(anyLong());
 
     }
+
+    @Test
+    public void testGetRecipeNumberFormatException() throws Exception {
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+    }
+
 }

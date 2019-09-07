@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class UnitOfMeasureCommandToUnitOfMeasureTest {
 
     private final String DESCRIPTION = "Pint";
-    private final Long UOM_ID = 1L ;
+    private final String UOM_ID = "1L" ;
     private UnitOfMeasureCommandToUnitOfMeasure converter;
 
 

@@ -8,7 +8,7 @@ import turmina.nazareh.spring5recipeapp.domain.Category;
 import static org.junit.Assert.*;
 
 public class CategoryToCategoryCommandTest {
-    public static final Long ID_VALUE = new Long(1L);
+    public static final String ID_VALUE = "String";
     public static final String DESCRIPTION = "descript";
     CategoryToCategoryCommand converter;
 

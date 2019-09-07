@@ -13,10 +13,10 @@ import static org.junit.Assert.*;
 
 public class IngredientToIngredientCommandTest {
 
-    public final Long INGREDIENT_ID_VALUE = 1L;
+    public final String INGREDIENT_ID_VALUE = "1L";
     public final String INGREDIENT_DESCRIPTION = "some ingredient";
     public final BigDecimal INGREDIENT_AMOUNT = new BigDecimal(3);
-    public final Long UOM_ID_VALUE = 2L;
+    public final String UOM_ID_VALUE = "2L";
     public final String UOM_DESCRIPTION = "some UOM";
     public final Recipe RECIPE =  new Recipe();
 

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class UnitOfMeasureToUnitOfMeasureCommandTest {
 
     private final String DESCRIPTION = "cups";
-    private final Long UOM_ID = 1L;
+    private final String UOM_ID = "1L";
     private UnitOfMeasureToUnitOfMeasureCommand converter;
 
     @Before

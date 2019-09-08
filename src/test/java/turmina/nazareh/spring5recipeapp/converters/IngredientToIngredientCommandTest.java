@@ -70,7 +70,7 @@ public class IngredientToIngredientCommandTest {
         //given
         Ingredient ingredient = new Ingredient();
         ingredient.setId(INGREDIENT_ID_VALUE);
-        ingredient.setRecipe(RECIPE);
+        //ingredient.setRecipe(RECIPE);
         ingredient.setAmount(INGREDIENT_AMOUNT);
         ingredient.setDescription(INGREDIENT_DESCRIPTION);
         ingredient.setUom(null);

@@ -1,40 +1,41 @@
 package turmina.nazareh.spring5recipeapp.converters;
 
 import lombok.Synchronized;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import turmina.nazareh.spring5recipeapp.commands.IngredientCommand;
+import turmina.nazareh.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import turmina.nazareh.spring5recipeapp.domain.Ingredient;
 
+/**
+ * Created by jt on 6/21/17.
+ */
 @Component
-public class IngredientToIngredientCommand implements Converter<Ingredient,IngredientCommand> {
+public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand> {
 
-    private final UnitOfMeasureToUnitOfMeasureCommand uomToUomCommand;
+    private final UnitOfMeasureToUnitOfMeasureCommand uomConverter;
 
-    @Autowired
-    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMeasureCommand uomToUomCommand) {
-        this.uomToUomCommand = uomToUomCommand;
+    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMeasureCommand uomConverter) {
+        this.uomConverter = uomConverter;
     }
 
     @Synchronized
     @Nullable
     @Override
-    public IngredientCommand convert(Ingredient source) {
-
-        if(source == null)
+    public IngredientCommand convert(Ingredient ingredient) {
+        if (ingredient == null) {
             return null;
+        }
 
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setId(source.getId());
-        if (source.getRecipe() != null ) {
-            ingredientCommand.setRecipeId(source.getRecipe().getId());
-        }
-        ingredientCommand.setDescription(source.getDescription());
-        ingredientCommand.setAmount(source.getAmount());
-        ingredientCommand.setUom(uomToUomCommand.convert(source.getUom()));
-
+        ingredientCommand.setId(ingredient.getId());
+//        if (ingredient.getRecipe() != null) {
+//            ingredientCommand.setRecipeId(ingredient.getRecipe().getId());
+//        }
+        ingredientCommand.setAmount(ingredient.getAmount());
+        ingredientCommand.setDescription(ingredient.getDescription());
+        ingredientCommand.setUom(uomConverter.convert(ingredient.getUom()));
         return ingredientCommand;
     }
 }

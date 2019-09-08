@@ -87,7 +87,7 @@ public class IngredientServiceImpl implements IngredientService{
 
             }else {
                 Ingredient ingredient = ingredientCommandToIngredient.convert(command);
-                ingredient.setRecipe(recipe);
+       //         ingredient.setRecipe(recipe);
                 recipe.addIngredient(ingredientCommandToIngredient.convert(command));
             }
 
@@ -128,7 +128,7 @@ public class IngredientServiceImpl implements IngredientService{
                 .filter(ingredient -> ingredient.getId().equals(ingredientId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Ingredient "+ ingredientId + "  NOT FOUND"));
-        ingredientToBeDelete.setRecipe(null);
+       // ingredientToBeDelete.setRecipe(null);
         recipeIngredients.removeIf( ingredient -> ingredient.getId().equals(ingredientToBeDelete.getId()));
         recipe.setIngredients(recipeIngredients);
         log.debug("list final size = " + recipe.getIngredients().size());

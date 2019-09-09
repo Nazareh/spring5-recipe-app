@@ -13,20 +13,22 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class RecipeCommand {
     private String id;
     @NotBlank
-    @Size(min = 3, max = 255)private String description;
-
-    @Min(1)
-    @Max(999)
-    private Integer cookTime;
-
-    @NotBlank
-    private String directions;
+    @Size(min = 3, max = 255)
+    private String description;
 
     @Min(1)
     @Max(999)
@@ -34,14 +36,21 @@ public class RecipeCommand {
 
     @Min(1)
     @Max(999)
+    private Integer cookTime;
+
+    @Min(1)
+    @Max(100)
     private Integer servings;
+    private String source;
 
     @URL
     private String url;
+
+    @NotBlank
+    private String directions;
+    private List<IngredientCommand> ingredients = new ArrayList<>();
     private Byte[] image;
-    private String source;
-    private Set<IngredientCommand> ingredients = new HashSet<>();
-    private NotesCommand notes;
     private Difficulty difficulty;
-    private Set<CategoryCommand> categories = new HashSet<>();
+    private NotesCommand notes;
+    private List<CategoryCommand> categories = new ArrayList<>();
 }

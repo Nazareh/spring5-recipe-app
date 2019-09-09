@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Recipe Form</title><!-- Latest compiled and minified CSS -->
+    <meta charset="UTF-8"/>
+    <title>Recipe Form</title>
+
+    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
           th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
@@ -153,6 +155,15 @@
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                                         </li>
                                     </ul>
+                                    <div th:each="ingredientEach, idx : ${recipe.ingredients}" >
+                                        <input  type="hidden" th:field="*{ingredients[__${idx.index}__].id}" />
+                                        <input  type="hidden" th:field="*{ingredients[__${idx.index}__].description}" />
+                                        <input  type="hidden" th:field="*{ingredients[__${idx.index}__].amount}" />
+                                        <input  type="hidden" th:field="*{ingredients[__${idx.index}__].uom.id}" />
+                                    </div>
+                                    <div th:each="catEach, idx : ${recipe.categories}" >
+                                        <input  type="hidden" th:field="*{categories[__${idx.index}__].id}" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

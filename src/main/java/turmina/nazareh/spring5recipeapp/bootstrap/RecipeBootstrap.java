@@ -1,6 +1,7 @@
 package turmina.nazareh.spring5recipeapp.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import turmina.nazareh.spring5recipeapp.domain.*;
 import turmina.nazareh.spring5recipeapp.repositories.CategoryRepository;
 import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 import turmina.nazareh.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import turmina.nazareh.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
+  /*  @Autowired
+    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;*/
+
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -40,6 +45,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         loadUom();
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
+
+ //       log.error("Count: "+ unitOfMeasureReactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){

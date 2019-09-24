@@ -10,6 +10,8 @@ import turmina.nazareh.spring5recipeapp.domain.*;
 import turmina.nazareh.spring5recipeapp.repositories.CategoryRepository;
 import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 import turmina.nazareh.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import turmina.nazareh.spring5recipeapp.repositories.reactive.CategoryReactiveRepository;
+import turmina.nazareh.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 import turmina.nazareh.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.math.BigDecimal;
@@ -31,6 +33,12 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Autowired
     UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
+    @Autowired
+    CategoryReactiveRepository categoryReactiveRepository;
+
+    @Autowired
+    RecipeReactiveRepository recipeReactiveRepository;
+
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -46,8 +54,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
 
-        log.error("###################");
-        log.error("Count: "+ unitOfMeasureReactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){

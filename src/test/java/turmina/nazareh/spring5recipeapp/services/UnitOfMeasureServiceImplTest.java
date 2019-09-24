@@ -4,12 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 import turmina.nazareh.spring5recipeapp.commands.UnitOfMeasureCommand;
 import turmina.nazareh.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import turmina.nazareh.spring5recipeapp.domain.UnitOfMeasure;
-import turmina.nazareh.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import turmina.nazareh.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -21,13 +23,13 @@ public class UnitOfMeasureServiceImplTest {
     UnitOfMeasureService unitOfMeasureService;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        unitOfMeasureService = new UnitOfMeasureServiceImpl(unitOfMeasureRepository,unitOfMeasureToUnitOfMeasureCommand);
+        unitOfMeasureService = new UnitOfMeasureServiceImpl(unitOfMeasureReactiveRepository,unitOfMeasureToUnitOfMeasureCommand);
 
     }
 
@@ -45,14 +47,14 @@ public class UnitOfMeasureServiceImplTest {
         uom2.setId("2L");
         unitOfMeasureSet.add(uom2);
 
-        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasureSet);
+        when(unitOfMeasureReactiveRepository.findAll()).thenReturn(Flux.just(uom1,uom2));
 
         //when
-        Set<UnitOfMeasureCommand> unitOfMeasureCommands = unitOfMeasureService.listAllUoms();
+        List<UnitOfMeasureCommand> unitOfMeasureCommands = unitOfMeasureService.listAllUoms().collectList().block();
 
         //then
         assertEquals(2,unitOfMeasureCommands.size());
-        verify(unitOfMeasureRepository,times(1)).findAll();
+        verify(unitOfMeasureReactiveRepository,times(1)).findAll();
 
 
     }

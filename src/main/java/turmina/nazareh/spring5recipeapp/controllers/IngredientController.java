@@ -41,7 +41,7 @@ public class IngredientController {
     public String showRecipeIngredient(@PathVariable String recipeId, @PathVariable String id, Model model){
 
         log.debug("Getting ingredient list for recipe id:" + id);
-        model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId,id));
+        model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId,id).block());
         return "/recipe/ingredient/show";
     }
 
@@ -69,7 +69,7 @@ public class IngredientController {
 
         log.debug("Updating recipe: " + recipeId + ", ingredient: "+ id);
 
-        model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId,id));
+        model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId,id).block());
 
         model.addAttribute("uomList",unitOfMeasureService.listAllUoms().collectList().block());
 
@@ -80,7 +80,7 @@ public class IngredientController {
     @PostMapping("/recipe/{recipeId}/ingredient")
     public String saveOrUpdate (@ModelAttribute IngredientCommand command){
 
-        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
         log.debug("saved recipe id:" + savedCommand.getRecipeId());
         log.debug("saved ingredient id:" + savedCommand.getId());
@@ -92,7 +92,7 @@ public class IngredientController {
     public String deleteAction (@PathVariable String recipeId, @PathVariable String ingredientId){
         log.debug("Deleting ingredient "+ ingredientId + " from recipe "+ recipeId);
 
-        ingredientService.deleteById(recipeId,ingredientId) ;
+        ingredientService.deleteById(recipeId,ingredientId).block() ;
         return "redirect:/recipe/"+ recipeId+"/ingredients";
 
     }

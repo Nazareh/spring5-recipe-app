@@ -2,14 +2,12 @@ package turmina.nazareh.spring5recipeapp.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.converters.RecipeCommandToRecipe;
 import turmina.nazareh.spring5recipeapp.converters.RecipeToRecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
-import turmina.nazareh.spring5recipeapp.exceptions.NotFoundException;
 import turmina.nazareh.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 
 
@@ -59,6 +57,6 @@ public class RecipeServiceImpl implements RecipeService {
     public Mono<Void> deleteById(String idToDelete) {
         
         recipeReactiveRepository.deleteById(idToDelete).block();
-        return null;
+        return Mono.empty();
     }
 }

@@ -9,7 +9,6 @@ import turmina.nazareh.spring5recipeapp.converters.IngredientCommandToIngredient
 import turmina.nazareh.spring5recipeapp.converters.IngredientToIngredientCommand;
 import turmina.nazareh.spring5recipeapp.domain.Ingredient;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
-import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 import turmina.nazareh.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 import turmina.nazareh.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 

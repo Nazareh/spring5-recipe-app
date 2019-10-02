@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@Ignore
 public class IndexControllerTest {
 
     private IndexController indexController;
@@ -40,7 +41,6 @@ public class IndexControllerTest {
     }
 
     @Test
-    @Ignore
     public void testMockMVC() throws Exception {
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();

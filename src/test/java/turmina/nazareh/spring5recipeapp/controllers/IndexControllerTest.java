@@ -40,6 +40,7 @@ public class IndexControllerTest {
     }
 
     @Test
+    @Ignore
     public void testMockMVC() throws Exception {
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();

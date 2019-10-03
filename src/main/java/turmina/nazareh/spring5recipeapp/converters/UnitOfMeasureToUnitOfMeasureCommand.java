@@ -1,28 +1,26 @@
 package turmina.nazareh.spring5recipeapp.converters;
 
 import lombok.Synchronized;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import turmina.nazareh.spring5recipeapp.commands.UnitOfMeasureCommand;
 import turmina.nazareh.spring5recipeapp.domain.UnitOfMeasure;
+import org.springframework.core.convert.converter.Converter;
 
 @Component
-public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure,UnitOfMeasureCommand> {
+public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure, UnitOfMeasureCommand> {
 
     @Synchronized
     @Nullable
     @Override
-    public UnitOfMeasureCommand convert(UnitOfMeasure source) {
+    public UnitOfMeasureCommand convert(UnitOfMeasure unitOfMeasure) {
 
-        if(source == null)
-            return null;
-
-        UnitOfMeasureCommand uomCommand = new UnitOfMeasureCommand();
-        uomCommand.setDescription(source.getDescription());
-        uomCommand.setId(source.getId());
-
-
-        return uomCommand;
+        if (unitOfMeasure != null) {
+            final UnitOfMeasureCommand uomc = new UnitOfMeasureCommand();
+            uomc.setId(unitOfMeasure.getId());
+            uomc.setDescription(unitOfMeasure.getDescription());
+            return uomc;
+        }
+        return null;
     }
 }

@@ -10,22 +10,15 @@ import turmina.nazareh.spring5recipeapp.domain.Difficulty;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class RecipeCommand {
     private String id;
+
     @NotBlank
     @Size(min = 3, max = 255)
     private String description;
@@ -48,6 +41,7 @@ public class RecipeCommand {
 
     @NotBlank
     private String directions;
+
     private List<IngredientCommand> ingredients = new ArrayList<>();
     private Byte[] image;
     private Difficulty difficulty;

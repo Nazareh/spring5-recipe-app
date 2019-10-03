@@ -10,7 +10,6 @@ import turmina.nazareh.spring5recipeapp.converters.RecipeToRecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
 import turmina.nazareh.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 
-
 @Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -27,7 +26,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Flux<Recipe> getRecipes() {
-        
+        log.debug("I'm in the service");
         return recipeReactiveRepository.findAll();
     }
 
@@ -38,25 +37,27 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Mono<RecipeCommand> findCommandById(String id) {
-        Mono<RecipeCommand> recipeCommandMono = recipeReactiveRepository
-                .findById(id)
-                .map(recipe -> {RecipeCommand recipeCommand = recipeToRecipeCommand.convert(recipe);
-                                recipeCommand.getIngredients().forEach(ingredientCommand -> ingredientCommand.setRecipeId(recipeCommand.getId()));
-                                return recipeCommand;
-                                });
+
+        Mono<RecipeCommand> recipeCommandMono  = 
+        recipeReactiveRepository.findById(id)
+                .map(recipe -> {
+                    RecipeCommand recipeCommand = recipeToRecipeCommand.convert(recipe);
+                    return recipeCommand;
+                });
+        RecipeCommand recipeCommand = recipeCommandMono.block();
         return recipeCommandMono;
     }
 
     @Override
     public Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command) {
-        
-        return recipeReactiveRepository.save(recipeCommandToRecipe.convert(command)).map(recipeToRecipeCommand::convert);
+
+        return recipeReactiveRepository.save(recipeCommandToRecipe.convert(command))
+                .map(recipeToRecipeCommand::convert);
     }
 
     @Override
     public Mono<Void> deleteById(String idToDelete) {
-        
-        recipeReactiveRepository.deleteById(idToDelete).block();
+        recipeReactiveRepository.deleteById(idToDelete).subscribe();
         return Mono.empty();
     }
 }

@@ -3,7 +3,6 @@ package turmina.nazareh.spring5recipeapp.domain;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
@@ -16,7 +15,6 @@ public class Recipe {
 
     @Id
     private String id;
-
     private String description;
     private Integer prepTime;
     private Integer cookTime;
@@ -24,18 +22,20 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
+    private Set<Ingredient> ingredients = new HashSet<>();
     private Byte[] image;
     private Difficulty difficulty;
     private Notes notes;
-    private Set<Ingredient> ingredients = new HashSet<>();
     private Set<Category> categories = new HashSet<>();
+
     public void setNotes(Notes notes) {
-        this.notes = notes;
+        if (notes != null) {
+            this.notes = notes;
+        }
     }
 
     public Recipe addIngredient(Ingredient ingredient){
         this.ingredients.add(ingredient);
         return this;
     }
-
 }

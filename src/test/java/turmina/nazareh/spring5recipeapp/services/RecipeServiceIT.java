@@ -1,6 +1,5 @@
 package turmina.nazareh.spring5recipeapp.services;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.converters.RecipeCommandToRecipe;
 import turmina.nazareh.spring5recipeapp.converters.RecipeToRecipeCommand;
 import turmina.nazareh.spring5recipeapp.domain.Recipe;
-import turmina.nazareh.spring5recipeapp.repositories.RecipeRepository;
 
 import static org.junit.Assert.assertEquals;
 

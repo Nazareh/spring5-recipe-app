@@ -3,6 +3,7 @@ package turmina.nazareh.spring5recipeapp.services;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
-public interface ImageService  {
+public interface ImageService {
+
     Mono<Void> saveImageFile(String recipeId, MultipartFile file);
 }

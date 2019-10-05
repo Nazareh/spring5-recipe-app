@@ -78,6 +78,8 @@ public class IngredientServiceImpl implements IngredientService {
             } else {
                 //add new Ingredient
                 Ingredient ingredient = ingredientCommandToIngredient.convert(command);
+                ingredient.setUom(unitOfMeasureRepository
+                        .findById(command.getUom().getId()).block());
                 recipe.addIngredient(ingredient);
             }
 

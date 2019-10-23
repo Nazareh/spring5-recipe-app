@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import turmina.nazareh.spring5recipeapp.commands.IngredientCommand;
 import turmina.nazareh.spring5recipeapp.commands.RecipeCommand;
 import turmina.nazareh.spring5recipeapp.commands.UnitOfMeasureCommand;
@@ -68,8 +69,6 @@ public class IngredientController {
         //init uom
         ingredientCommand.setUom(new UnitOfMeasureCommand());
 
-        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
-
         return INGREDIENT_INGREDIENTFORM_URL;
     }
 
@@ -78,7 +77,6 @@ public class IngredientController {
                                          @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id).block());
 
-        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return INGREDIENT_INGREDIENTFORM_URL;
     }
 
@@ -95,7 +93,6 @@ public class IngredientController {
                 log.debug(objectError.toString());
             });
 
-            model.addAttribute("uomList",unitOfMeasureService.listAllUoms());
             return INGREDIENT_INGREDIENTFORM_URL;
         }
 
@@ -113,5 +110,10 @@ public class IngredientController {
         ingredientService.deleteById(recipeId, id).block();
 
         return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
+    
+    @ModelAttribute("uomList")
+    public Flux<UnitOfMeasureCommand> populateUomList (){
+        return unitOfMeasureService.listAllUoms();
     }
 }
